@@ -4,14 +4,19 @@
  */
 
 .steil-cfg {
-	--steil-accent: #2b6cb0;
 	--steil-ink: #1c1b1a;
-	--steil-line: rgba( 0, 0, 0, 0.12 );
+	--steil-muted: #6b6b72;
+	--steil-surface: #ffffff;
+	--steil-surface-2: #f6f6f4;
+	--steil-line: rgba( 0, 0, 0, 0.1 );
+	--steil-radius: 16px;
+	--steil-shadow: 0 1px 2px rgba( 0, 0, 0, 0.04 ), 0 8px 24px rgba( 0, 0, 0, 0.06 );
 
 	display: flex;
-	gap: 24px;
+	gap: 28px;
 	width: 100%;
 	box-sizing: border-box;
+	color: var( --steil-ink );
 
 	* {
 		box-sizing: border-box;
@@ -22,24 +27,32 @@
 		align-items: stretch;
 
 		.steil-cfg__stage {
-			flex: 1 1 60%;
+			flex: 1 1 58%;
+			min-width: 0;
 		}
 		.steil-cfg__panel {
-			flex: 1 1 40%;
-			max-width: 380px;
+			flex: 0 0 340px;
+			max-width: 340px;
 		}
 	}
 
 	&--bottom {
 		flex-direction: column;
+
+		.steil-cfg__panel {
+			max-width: none;
+		}
 	}
 
+	/* ---- 3D stage ---- */
 	&__stage {
 		position: relative;
-		min-height: 280px;
-		border-radius: 14px;
+		min-height: 300px;
+		border-radius: var( --steil-radius );
 		overflow: hidden;
-		background: rgba( 0, 0, 0, 0.03 );
+		background:
+			radial-gradient( circle at 30% 20%, rgba( 0, 0, 0, 0.015 ), transparent 70% ),
+			var( --steil-surface-2 );
 	}
 
 	&__canvas {
@@ -61,34 +74,42 @@
 		align-items: center;
 		justify-content: center;
 		font-size: 0.95rem;
-		color: var( --steil-ink );
-		opacity: 0.7;
+		color: var( --steil-muted );
 
 		&.is-error {
 			color: #b42318;
-			opacity: 1;
 		}
 	}
 
+	/* ---- control panel (a stable card; nothing reflows it) ---- */
 	&__panel {
 		display: flex;
 		flex-direction: column;
-		gap: 18px;
-		justify-content: center;
+		gap: 22px;
+		align-self: center;
+		width: 100%;
+		padding: 24px;
+		background: var( --steil-surface );
+		border: 1px solid var( --steil-line );
+		border-radius: var( --steil-radius );
+		box-shadow: var( --steil-shadow );
 	}
 
 	&__row {
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
+		gap: 10px;
 	}
 
 	&__label {
 		font-weight: 600;
-		font-size: 0.9rem;
-		letter-spacing: 0.01em;
+		font-size: 0.78rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var( --steil-muted );
 	}
 
+	/* ---- colour swatches ---- */
 	&__swatches {
 		display: flex;
 		flex-wrap: wrap;
@@ -96,125 +117,279 @@
 	}
 
 	&__swatch {
-		width: 32px;
-		height: 32px;
+		position: relative;
+		width: 34px;
+		height: 34px;
 		border-radius: 50%;
-		border: 2px solid var( --steil-line );
+		border: 1px solid var( --steil-line );
 		padding: 0;
 		cursor: pointer;
-		transition: transform 0.15s ease, box-shadow 0.15s ease;
+		transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			border-radius: 50%;
+			box-shadow: inset 0 0 0 2px #fff;
+			opacity: 0;
+			transition: opacity 0.18s ease;
+		}
 
 		&:hover {
-			transform: scale( 1.08 );
+			transform: translateY( -2px );
+		}
+
+		&:focus-visible {
+			outline: 2px solid var( --steil-ink );
+			outline-offset: 2px;
 		}
 
 		&.is-active {
-			border-color: var( --steil-ink );
-			box-shadow: 0 0 0 2px #fff, 0 0 0 4px var( --steil-ink );
+			box-shadow: 0 0 0 2px var( --steil-ink );
+
+			&::after {
+				opacity: 1;
+			}
 		}
 	}
 
+	/* ---- finish: segmented control ---- */
 	&__finish {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 8px;
+		display: inline-flex;
+		padding: 4px;
+		gap: 4px;
+		background: var( --steil-surface-2 );
+		border-radius: 999px;
+		width: fit-content;
 	}
 
 	&__chip {
-		padding: 7px 14px;
+		padding: 8px 16px;
 		border-radius: 999px;
-		border: 1.5px solid var( --steil-line );
+		border: 0;
 		background: transparent;
 		font-size: 0.85rem;
+		font-weight: 600;
+		color: var( --steil-muted );
 		cursor: pointer;
-		transition: background 0.15s ease, color 0.15s ease;
+		transition: background 0.18s ease, color 0.18s ease;
+
+		&:hover {
+			color: var( --steil-ink );
+		}
+
+		&:focus-visible {
+			outline: 2px solid var( --steil-ink );
+			outline-offset: 2px;
+		}
 
 		&.is-active {
-			background: var( --steil-ink );
-			color: #fff;
-			border-color: var( --steil-ink );
+			background: var( --steil-surface );
+			color: var( --steil-ink );
+			box-shadow: 0 1px 2px rgba( 0, 0, 0, 0.12 );
 		}
 	}
 
+	/* ---- actions ---- */
 	&__actions {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 12px;
-		margin-top: 4px;
+		margin-top: 2px;
 	}
 
 	&__btn {
-		padding: 11px 22px;
-		border-radius: 8px;
+		flex: 1 1 auto;
+		padding: 13px 22px;
+		border-radius: 10px;
 		font-size: 0.95rem;
 		font-weight: 600;
 		cursor: pointer;
-		border: 1.5px solid var( --steil-ink );
-		transition: transform 0.15s ease, opacity 0.15s ease;
+		border: 1px solid transparent;
+		transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
 
 		&:hover {
 			transform: translateY( -1px );
 		}
 
+		&:focus-visible {
+			outline: 2px solid var( --steil-ink );
+			outline-offset: 2px;
+		}
+
 		&:disabled {
-			opacity: 0.6;
+			opacity: 0.55;
 			cursor: default;
+			transform: none;
 		}
 
 		&--primary {
 			background: var( --steil-ink );
 			color: #fff;
+			box-shadow: 0 4px 14px rgba( 0, 0, 0, 0.18 );
+
+			&:hover {
+				box-shadow: 0 6px 18px rgba( 0, 0, 0, 0.24 );
+			}
 		}
 
 		&--ghost {
 			background: transparent;
 			color: var( --steil-ink );
-		}
-	}
+			border-color: var( --steil-line );
+			flex: 0 0 auto;
 
-	&__quote {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		margin-top: 8px;
-		padding: 16px;
-		border: 1px solid var( --steil-line );
-		border-radius: 12px;
-	}
-
-	&__summary {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-		font-size: 0.85rem;
-		margin-bottom: 4px;
-	}
-
-	&__summary-item {
-		color: rgba( 0, 0, 0, 0.7 );
-	}
-
-	&__input {
-		width: 100%;
-		padding: 10px 12px;
-		border: 1px solid var( --steil-line );
-		border-radius: 8px;
-		font: inherit;
-	}
-
-	&__status {
-		font-size: 0.85rem;
-		margin: 0;
-
-		&.is-ok {
-			color: #2f855a;
+			&:hover {
+				background: var( --steil-surface-2 );
+			}
 		}
 	}
 
 	&__notice {
 		padding: 14px;
 		border: 1px dashed var( --steil-line );
-		border-radius: 8px;
+		border-radius: var( --steil-radius );
+		color: var( --steil-muted );
+	}
+}
+
+/* ---- quote modal (overlay — never reflows the configurator) ---- */
+.steil-cfg__modal {
+	/* Re-declare tokens: the modal is appended to <body>, outside .steil-cfg. */
+	--steil-ink: #1c1b1a;
+	--steil-line: rgba( 0, 0, 0, 0.1 );
+	--steil-surface-2: #f6f6f4;
+
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 5vw;
+	background: rgba( 24, 23, 22, 0.55 );
+	backdrop-filter: blur( 3px );
+	opacity: 0;
+	transition: opacity 0.2s ease;
+
+	&.is-open {
+		opacity: 1;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+}
+
+.steil-cfg__dialog {
+	position: relative;
+	width: 100%;
+	max-width: 440px;
+	max-height: 90vh;
+	overflow-y: auto;
+	background: #fff;
+	color: #1c1b1a;
+	border-radius: 18px;
+	padding: 28px;
+	box-shadow: 0 24px 60px rgba( 0, 0, 0, 0.3 );
+	transform: translateY( 14px ) scale( 0.98 );
+	transition: transform 0.22s cubic-bezier( 0.22, 1, 0.36, 1 );
+
+	.steil-cfg__modal.is-open & {
+		transform: none;
+	}
+}
+
+.steil-cfg__dialog-title {
+	margin: 0 0 16px;
+	font-size: 1.25rem;
+	font-weight: 700;
+}
+
+.steil-cfg__modal-close {
+	position: absolute;
+	top: 14px;
+	right: 14px;
+	width: 36px;
+	height: 36px;
+	display: grid;
+	place-items: center;
+	border: 0;
+	border-radius: 50%;
+	background: rgba( 0, 0, 0, 0.05 );
+	font-size: 1.5rem;
+	line-height: 1;
+	cursor: pointer;
+	transition: background 0.15s ease;
+
+	&:hover {
+		background: rgba( 0, 0, 0, 0.1 );
+	}
+}
+
+.steil-cfg__summary {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: 20px;
+	padding: 14px 16px;
+	background: #f6f6f4;
+	border-radius: 12px;
+	font-size: 0.88rem;
+}
+
+.steil-cfg__summary-head {
+	font-weight: 700;
+	font-size: 0.72rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: #6b6b72;
+	margin-bottom: 4px;
+}
+
+.steil-cfg__summary-item {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.steil-cfg__summary-key {
+	color: #6b6b72;
+}
+
+.steil-cfg__summary-val {
+	font-weight: 600;
+}
+
+.steil-cfg__quote {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.steil-cfg__input {
+	width: 100%;
+	padding: 12px 14px;
+	border: 1px solid rgba( 0, 0, 0, 0.14 );
+	border-radius: 10px;
+	font: inherit;
+	background: #fff;
+
+	&:focus {
+		outline: none;
+		border-color: #1c1b1a;
+		box-shadow: 0 0 0 3px rgba( 28, 27, 26, 0.12 );
+	}
+}
+
+.steil-cfg__status {
+	font-size: 0.88rem;
+	margin: 2px 0 0;
+
+	&.is-ok {
+		color: #2f855a;
+		font-weight: 600;
 	}
 }
 
@@ -223,7 +398,16 @@
 		flex-direction: column;
 
 		.steil-cfg__panel {
+			flex-basis: auto;
 			max-width: none;
 		}
+	}
+}
+
+@media ( prefers-reduced-motion: reduce ) {
+	.steil-cfg *,
+	.steil-cfg__modal,
+	.steil-cfg__dialog {
+		transition: none !important;
 	}
 }

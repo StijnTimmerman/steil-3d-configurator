@@ -7,6 +7,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { loadModel } from '../engine/load-model';
+import { createConfigurator } from '../engine/configurator-engine';
 import './product-editor.scss';
 
 const admin = window.steilCfgAdmin || { pluginUrl: '' };
@@ -68,18 +69,67 @@ function init() {
 	state.model_url = state.model_url || '';
 
 	let detectedNames = [];
+	let previewEngine = null;
+
+	// Persistent preview (kept across control re-renders so the WebGL canvas
+	// isn't destroyed on every edit) + a separate, re-rendered controls area.
+	mount.innerHTML = '';
+	const previewWrap = el( 'div', 'steil-pe__preview' );
+	const controls = el( 'div', 'steil-pe__controls' );
+	mount.append( previewWrap, controls );
 
 	const sync = () => {
 		hidden.value = JSON.stringify( state );
 	};
 
+	function buildPreview() {
+		if ( previewEngine ) {
+			previewEngine.dispose();
+			previewEngine = null;
+		}
+		previewWrap.innerHTML = '';
+
+		const url = resolveUrl( mount.dataset.modelUrl || state.model_url );
+		if ( ! url ) {
+			previewWrap.appendChild(
+				el( 'div', 'steil-pe__preview-empty', __( 'Upload a model to preview it here.', 'steil-3d-configurator' ) )
+			);
+			return;
+		}
+
+		const stage = el( 'div', 'steil-pe__preview-stage' );
+		const canvas = el( 'canvas', 'steil-pe__preview-canvas' );
+		const loading = el( 'div', 'steil-pe__preview-loading', __( 'Loading preview…', 'steil-3d-configurator' ) );
+		stage.append( canvas, loading );
+		previewWrap.appendChild( stage );
+
+		try {
+			previewEngine = createConfigurator( canvas, {
+				modelUrl: url,
+				parts: state.parts,
+				finishes: state.finishes,
+				defaultFinish: state.default_finish,
+				background: state.background,
+			} );
+			previewEngine.ready
+				.then( () => loading.remove() )
+				.catch( () => {
+					loading.textContent = __( 'Could not load preview.', 'steil-3d-configurator' );
+					loading.classList.add( 'is-error' );
+				} );
+		} catch ( e ) {
+			loading.textContent = __( 'Could not load preview.', 'steil-3d-configurator' );
+			loading.classList.add( 'is-error' );
+		}
+	}
+
 	const render = () => {
-		mount.innerHTML = '';
-		mount.appendChild( renderModelSection() );
-		mount.appendChild( renderDetected() );
-		mount.appendChild( renderParts() );
-		mount.appendChild( renderFinishes() );
-		mount.appendChild( renderBackground() );
+		controls.innerHTML = '';
+		controls.appendChild( renderModelSection() );
+		controls.appendChild( renderDetected() );
+		controls.appendChild( renderParts() );
+		controls.appendChild( renderFinishes() );
+		controls.appendChild( renderBackground() );
 		sync();
 	};
 
@@ -115,6 +165,15 @@ function init() {
 				introspect( current, inspect );
 			} );
 			box.appendChild( inspect );
+
+			const refresh = el( 'button', 'button', __( 'Refresh preview', 'steil-3d-configurator' ) );
+			refresh.type = 'button';
+			refresh.style.marginLeft = '8px';
+			refresh.addEventListener( 'click', ( e ) => {
+				e.preventDefault();
+				buildPreview();
+			} );
+			box.appendChild( refresh );
 		}
 		return box;
 	}
@@ -134,6 +193,7 @@ function init() {
 			state.model_url = att.url;
 			mount.dataset.modelUrl = att.url;
 			render();
+			buildPreview();
 			introspect( att.url );
 		} );
 		frame.open();
@@ -165,6 +225,7 @@ function init() {
 				} );
 				detectedNames = Array.from( names );
 				render();
+				buildPreview();
 			} )
 			.catch( () => {
 				detectedNames = [];
@@ -386,6 +447,7 @@ function init() {
 	}
 
 	render();
+	buildPreview();
 }
 
 if ( document.readyState === 'loading' ) {

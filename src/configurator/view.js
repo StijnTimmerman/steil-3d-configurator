@@ -119,21 +119,46 @@ function currentSelection( data, engine ) {
 }
 
 function openQuoteForm( root, data, engine ) {
-	const existing = root.querySelector( '.steil-cfg__quote' );
-	if ( existing ) {
-		existing.remove();
+	if ( document.querySelector( '.steil-cfg__modal' ) ) {
 		return;
 	}
 
-	const form = el( 'form', 'steil-cfg__quote' );
+	// Capture the screenshot now, while the current view is on screen.
+	let screenshot = '';
+	try {
+		screenshot = engine.screenshot();
+	} catch ( err ) {
+		screenshot = '';
+	}
 
+	const overlay = el( 'div', 'steil-cfg__modal' );
+	const dialog = el( 'div', 'steil-cfg__dialog' );
+	dialog.setAttribute( 'role', 'dialog' );
+	dialog.setAttribute( 'aria-modal', 'true' );
+
+	const closeBtn = el( 'button', 'steil-cfg__modal-close' );
+	closeBtn.type = 'button';
+	closeBtn.innerHTML = '&times;';
+	closeBtn.setAttribute( 'aria-label', t( 'cancel', 'Cancel' ) );
+	dialog.appendChild( closeBtn );
+
+	dialog.appendChild(
+		el( 'h3', 'steil-cfg__dialog-title', t( 'requestQuote', 'Request a quote' ) )
+	);
+
+	// Selection summary.
 	const summary = el( 'div', 'steil-cfg__summary' );
-	summary.appendChild( el( 'strong', null, t( 'yourSelection', 'Your selection' ) ) );
+	summary.appendChild( el( 'span', 'steil-cfg__summary-head', t( 'yourSelection', 'Your selection' ) ) );
 	const selection = currentSelection( data, engine );
 	Object.keys( selection ).forEach( ( key ) => {
-		summary.appendChild( el( 'span', 'steil-cfg__summary-item', `${ key }: ${ selection[ key ] }` ) );
+		const item = el( 'div', 'steil-cfg__summary-item' );
+		item.appendChild( el( 'span', 'steil-cfg__summary-key', key ) );
+		item.appendChild( el( 'span', 'steil-cfg__summary-val', selection[ key ] ) );
+		summary.appendChild( item );
 	} );
-	form.appendChild( summary );
+	dialog.appendChild( summary );
+
+	const form = el( 'form', 'steil-cfg__quote' );
 
 	const nameInput = el( 'input', 'steil-cfg__input' );
 	nameInput.type = 'text';
@@ -168,18 +193,34 @@ function openQuoteForm( root, data, engine ) {
 	const status = el( 'p', 'steil-cfg__status' );
 
 	form.append( nameInput, emailInput, messageInput, honey, submit, status );
+	dialog.appendChild( form );
+	overlay.appendChild( dialog );
+	document.body.appendChild( overlay );
+	requestAnimationFrame( () => overlay.classList.add( 'is-open' ) );
+	nameInput.focus();
+
+	const close = () => {
+		overlay.classList.remove( 'is-open' );
+		document.removeEventListener( 'keydown', onKey );
+		setTimeout( () => overlay.remove(), 220 );
+	};
+	const onKey = ( e ) => {
+		if ( e.key === 'Escape' ) {
+			close();
+		}
+	};
+	document.addEventListener( 'keydown', onKey );
+	overlay.addEventListener( 'click', ( e ) => {
+		if ( e.target === overlay ) {
+			close();
+		}
+	} );
+	closeBtn.addEventListener( 'click', close );
 
 	form.addEventListener( 'submit', async ( e ) => {
 		e.preventDefault();
 		submit.disabled = true;
 		status.textContent = t( 'sending', 'Sending…' );
-
-		let screenshot = '';
-		try {
-			screenshot = engine.screenshot();
-		} catch ( err ) {
-			screenshot = '';
-		}
 
 		try {
 			const res = await fetch( runtime.rest + 'quote', {
@@ -194,22 +235,23 @@ function openQuoteForm( root, data, engine ) {
 					email: emailInput.value,
 					message: messageInput.value,
 					website: honey.value,
-					selection: currentSelection( data, engine ),
+					selection,
 					screenshot,
 				} ),
 			} );
 			if ( ! res.ok ) {
 				throw new Error( 'bad status' );
 			}
-			form.innerHTML = '';
-			form.appendChild( el( 'p', 'steil-cfg__status is-ok', t( 'thanks', 'Thanks! We will get back to you soon.' ) ) );
+			form.remove();
+			summary.remove();
+			dialog.appendChild(
+				el( 'p', 'steil-cfg__status is-ok', t( 'thanks', 'Thanks! We will get back to you soon.' ) )
+			);
 		} catch ( err ) {
 			submit.disabled = false;
 			status.textContent = t( 'error', 'Something went wrong. Please try again.' );
 		}
 	} );
-
-	root.querySelector( '.steil-cfg__panel' ).appendChild( form );
 }
 
 function initBlock( root ) {
