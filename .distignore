@@ -1,0 +1,18 @@
+# Files and folders excluded from the WordPress.org deploy.
+# Everything NOT listed here is shipped (including the built build/ folder,
+# which is generated in CI before deploy). Keep src/ for source transparency.
+
+/.git
+/.github
+/.wordpress-org
+/.idea
+/node_modules
+/scripts
+/.distignore
+/.gitignore
+/.editorconfig
+/SUBMISSION.md
+/package-lock.json
+*.zip
+*.log
+.DS_Store

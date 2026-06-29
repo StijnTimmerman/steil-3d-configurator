@@ -1,0 +1,29 @@
+name: Update WordPress.org assets & readme
+
+# Syncs the directory assets (.wordpress-org/) and the trunk readme.txt to
+# WordPress.org whenever they change on master — no release needed. Lets you
+# update banners, icon, screenshots or the store description between releases.
+# Requires the same SVN_USERNAME / SVN_PASSWORD secrets and an approved plugin.
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - '.wordpress-org/**'
+      - 'readme.txt'
+
+jobs:
+  assets:
+    name: Update assets and readme
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update assets and readme on WordPress.org
+        uses: 10up/action-wordpress-plugin-asset-update@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: 3d-product-configurator-block
+          ASSETS_DIR: .wordpress-org

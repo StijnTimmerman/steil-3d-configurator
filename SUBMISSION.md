@@ -81,8 +81,33 @@ svn ci -m "3D Product Configurator Block 0.0.1"
 2. Add a `== Changelog ==` entry in `readme.txt`.
 3. `npm run build`, copy to `trunk/`, `svn cp trunk tags/<new-version>`, `svn ci`.
 
-## Optional: automate with GitHub Actions
+## Automated deploys (already set up)
 
-`10up/action-wordpress-plugin-deploy` deploys `trunk` + a tag to WordPress.org
-SVN on every GitHub release, and `action-wordpress-plugin-asset-update` syncs the
-`.wordpress-org/` assets. Ask and I'll add the workflow.
+Two GitHub Actions handle WordPress.org for you (in `.github/workflows/`):
+
+- **`deploy.yml`** — on a published **GitHub Release**: installs deps, runs
+  `npm run build`, then deploys `trunk` + a `tags/<release-tag>` + the
+  `.wordpress-org/` assets to WordPress.org SVN, and attaches the built zip to
+  the release.
+- **`assets.yml`** — on push to `master` touching `readme.txt` or
+  `.wordpress-org/**`: updates the store assets/description without a release.
+
+`.distignore` controls what ships (everything except dev files; the built
+`build/` folder IS included because CI builds it first).
+
+### One-time setup (after the plugin is approved)
+
+1. The plugin must be **approved** so the SVN repo exists (auto-deploy can't run
+   before that — do the first release via the manual SVN steps above, or just
+   publish a GitHub Release once approved).
+2. In GitHub: **Settings → Secrets and variables → Actions → New repository
+   secret**, add:
+   - `SVN_USERNAME` — your WordPress.org username (`stijntimmerman`)
+   - `SVN_PASSWORD` — your WordPress.org password
+3. Make sure `Stable tag` in `readme.txt` matches the release tag (e.g. `0.0.1`).
+
+### Releasing after that
+
+Create a GitHub Release tagged with the version (e.g. `0.0.1`). The deploy
+workflow does the rest. To only refresh banners/screenshots/description, just
+push the change to `master`.
