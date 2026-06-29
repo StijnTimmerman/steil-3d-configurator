@@ -78,8 +78,28 @@ function init() {
 	const controls = el( 'div', 'steil-pe__controls' );
 	mount.append( previewWrap, controls );
 
+	// Push the current default colours + finish into the live preview without
+	// reloading the model (state.parts/finishes are shared by reference with the
+	// engine, so re-applying picks up edited hex/roughness values immediately).
+	let liveTimer = null;
+	const livePreview = () => {
+		if ( ! previewEngine ) {
+			return;
+		}
+		state.parts.forEach( ( p ) => {
+			if ( p.default ) {
+				previewEngine.setColor( p.key, p.default );
+			}
+		} );
+		if ( state.default_finish ) {
+			previewEngine.setFinish( state.default_finish );
+		}
+	};
+
 	const sync = () => {
 		hidden.value = JSON.stringify( state );
+		clearTimeout( liveTimer );
+		liveTimer = setTimeout( livePreview, 120 );
 	};
 
 	function buildPreview() {
