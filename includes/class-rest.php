@@ -104,7 +104,7 @@ class REST {
 	public function get_product( $request ) {
 		$config = Product_Store::get_config( (int) $request['id'] );
 		if ( ! $config ) {
-			return new \WP_Error( 'steil_cfg_not_found', __( 'Product not found.', 'steil-3d-configurator' ), array( 'status' => 404 ) );
+			return new \WP_Error( 'steil_cfg_not_found', __( 'Product not found.', '3d-product-configurator-block' ), array( 'status' => 404 ) );
 		}
 		return rest_ensure_response( $config );
 	}

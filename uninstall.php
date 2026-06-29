@@ -9,7 +9,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-$steil_products = get_posts(
+$steil_cfg_products = get_posts(
 	array(
 		'post_type'      => 'steil_cfg_product',
 		'posts_per_page' => -1,
@@ -18,6 +18,6 @@ $steil_products = get_posts(
 	)
 );
 
-foreach ( $steil_products as $steil_id ) {
-	wp_delete_post( $steil_id, true );
+foreach ( $steil_cfg_products as $steil_cfg_id ) {
+	wp_delete_post( $steil_cfg_id, true );
 }

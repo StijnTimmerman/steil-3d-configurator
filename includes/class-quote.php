@@ -30,13 +30,13 @@ class Quote {
 
 		$email = sanitize_email( (string) $request->get_param( 'email' ) );
 		if ( ! is_email( $email ) ) {
-			return new \WP_Error( 'steil_cfg_bad_email', __( 'Please provide a valid email address.', 'steil-3d-configurator' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'steil_cfg_bad_email', __( 'Please provide a valid email address.', '3d-product-configurator-block' ), array( 'status' => 400 ) );
 		}
 
 		$product_id = absint( $request->get_param( 'product_id' ) );
 		$config     = Product_Store::get_config( $product_id );
 		if ( ! $config ) {
-			return new \WP_Error( 'steil_cfg_bad_product', __( 'Unknown product.', 'steil-3d-configurator' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'steil_cfg_bad_product', __( 'Unknown product.', '3d-product-configurator-block' ), array( 'status' => 400 ) );
 		}
 
 		$name      = sanitize_text_field( (string) $request->get_param( 'name' ) );
@@ -57,7 +57,7 @@ class Quote {
 		}
 
 		if ( ! $sent ) {
-			return new \WP_Error( 'steil_cfg_mail_failed', __( 'We could not send your request. Please try again later.', 'steil-3d-configurator' ), array( 'status' => 500 ) );
+			return new \WP_Error( 'steil_cfg_mail_failed', __( 'We could not send your request. Please try again later.', '3d-product-configurator-block' ), array( 'status' => 500 ) );
 		}
 
 		/**
@@ -142,23 +142,23 @@ class Quote {
 		 * @param string $to Recipient.
 		 */
 		$to      = apply_filters( 'steil_cfg_quote_recipient', get_option( 'admin_email' ) );
-		$product = isset( $config['title'] ) ? $config['title'] : __( 'product', 'steil-3d-configurator' );
+		$product = isset( $config['title'] ) ? $config['title'] : __( 'product', '3d-product-configurator-block' );
 
 		/* translators: %s: product name. */
-		$subject = sprintf( __( 'New quote request: %s', 'steil-3d-configurator' ), $product );
+		$subject = sprintf( __( 'New quote request: %s', '3d-product-configurator-block' ), $product );
 
 		$lines   = array();
-		$lines[] = sprintf( /* translators: %s: product name. */ __( 'Product: %s', 'steil-3d-configurator' ), $product );
-		$lines[] = sprintf( /* translators: %s: name. */ __( 'Name: %s', 'steil-3d-configurator' ), $name ? $name : '—' );
-		$lines[] = sprintf( /* translators: %s: email. */ __( 'Email: %s', 'steil-3d-configurator' ), $email );
+		$lines[] = sprintf( /* translators: %s: product name. */ __( 'Product: %s', '3d-product-configurator-block' ), $product );
+		$lines[] = sprintf( /* translators: %s: name. */ __( 'Name: %s', '3d-product-configurator-block' ), $name ? $name : '—' );
+		$lines[] = sprintf( /* translators: %s: email. */ __( 'Email: %s', '3d-product-configurator-block' ), $email );
 		$lines[] = '';
-		$lines[] = __( 'Chosen configuration:', 'steil-3d-configurator' );
+		$lines[] = __( 'Chosen configuration:', '3d-product-configurator-block' );
 		foreach ( $selection as $key => $value ) {
 			$lines[] = sprintf( '  - %s: %s', $key, $value );
 		}
 		if ( $message ) {
 			$lines[] = '';
-			$lines[] = __( 'Message:', 'steil-3d-configurator' );
+			$lines[] = __( 'Message:', '3d-product-configurator-block' );
 			$lines[] = $message;
 		}
 

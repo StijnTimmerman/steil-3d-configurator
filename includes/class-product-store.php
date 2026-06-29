@@ -88,17 +88,17 @@ class Product_Store {
 	public static function default_finishes() {
 		return array(
 			'matte' => array(
-				'label'     => __( 'Matte', 'steil-3d-configurator' ),
+				'label'     => __( 'Matte', '3d-product-configurator-block' ),
 				'roughness' => 0.85,
 				'metalness' => 0.0,
 			),
 			'satin' => array(
-				'label'     => __( 'Satin', 'steil-3d-configurator' ),
+				'label'     => __( 'Satin', '3d-product-configurator-block' ),
 				'roughness' => 0.45,
 				'metalness' => 0.05,
 			),
 			'gloss' => array(
-				'label'     => __( 'Gloss', 'steil-3d-configurator' ),
+				'label'     => __( 'Gloss', '3d-product-configurator-block' ),
 				'roughness' => 0.12,
 				'metalness' => 0.1,
 			),
@@ -165,21 +165,21 @@ class Product_Store {
 		$config['parts']       = array(
 			array(
 				'key'     => 'frame',
-				'label'   => __( 'Frame', 'steil-3d-configurator' ),
+				'label'   => __( 'Frame', '3d-product-configurator-block' ),
 				'match'   => array( 'frame', 'leg' ),
 				'palette' => $frame,
 				'default' => 'Walnut',
 			),
 			array(
 				'key'     => 'seat',
-				'label'   => __( 'Seat', 'steil-3d-configurator' ),
+				'label'   => __( 'Seat', '3d-product-configurator-block' ),
 				'match'   => array( 'seat' ),
 				'palette' => $fabric,
 				'default' => 'Charcoal',
 			),
 			array(
 				'key'     => 'back',
-				'label'   => __( 'Backrest', 'steil-3d-configurator' ),
+				'label'   => __( 'Backrest', '3d-product-configurator-block' ),
 				'match'   => array( 'back' ),
 				'palette' => $fabric,
 				'default' => 'Charcoal',

@@ -114,6 +114,6 @@ class Assets {
 			)
 		);
 
-		wp_set_script_translations( 'steil-cfg-product-editor', 'steil-3d-configurator' );
+		wp_set_script_translations( 'steil-cfg-product-editor', '3d-product-configurator-block' );
 	}
 }

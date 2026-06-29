@@ -13,56 +13,56 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$steil_product_id = isset( $attributes['productId'] ) ? (int) $attributes['productId'] : 0;
+$steil_cfg_product_id = isset( $attributes['productId'] ) ? (int) $attributes['productId'] : 0;
 
 // Fall back to the first available product when none is chosen.
-if ( $steil_product_id <= 0 ) {
-	$steil_first = get_posts(
+if ( $steil_cfg_product_id <= 0 ) {
+	$steil_cfg_first = get_posts(
 		array(
 			'post_type'      => \SteilConfigurator\Product_CPT::POST_TYPE,
 			'posts_per_page' => 1,
 			'fields'         => 'ids',
 		)
 	);
-	$steil_product_id = ! empty( $steil_first ) ? (int) $steil_first[0] : 0;
+	$steil_cfg_product_id = ! empty( $steil_cfg_first ) ? (int) $steil_cfg_first[0] : 0;
 }
 
-$steil_config = $steil_product_id ? \SteilConfigurator\Product_Store::get_config( $steil_product_id ) : null;
+$steil_cfg_config = $steil_cfg_product_id ? \SteilConfigurator\Product_Store::get_config( $steil_cfg_product_id ) : null;
 
-if ( ! $steil_config || empty( $steil_config['parts'] ) || empty( $steil_config['model_url'] ) ) {
+if ( ! $steil_cfg_config || empty( $steil_cfg_config['parts'] ) || empty( $steil_cfg_config['model_url'] ) ) {
 	if ( current_user_can( 'edit_posts' ) ) {
 		echo '<div ' . get_block_wrapper_attributes() . '><p class="steil-cfg__notice">' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			. esc_html__( 'Configurator: select a configured product with a model and parts.', 'steil-3d-configurator' )
+			. esc_html__( 'Configurator: select a configured product with a model and parts.', '3d-product-configurator-block' )
 			. '</p></div>';
 	}
 	return;
 }
 
-$steil_height   = isset( $attributes['height'] ) ? max( 240, (int) $attributes['height'] ) : 520;
-$steil_position = ( isset( $attributes['controlsPosition'] ) && 'bottom' === $attributes['controlsPosition'] ) ? 'bottom' : 'side';
+$steil_cfg_height   = isset( $attributes['height'] ) ? max( 240, (int) $attributes['height'] ) : 520;
+$steil_cfg_position = ( isset( $attributes['controlsPosition'] ) && 'bottom' === $attributes['controlsPosition'] ) ? 'bottom' : 'side';
 
-$steil_data = array(
-	'product'     => $steil_product_id,
-	'config'      => $steil_config,
+$steil_cfg_data = array(
+	'product'     => $steil_cfg_product_id,
+	'config'      => $steil_cfg_config,
 	'showFinish'  => ! empty( $attributes['showFinish'] ),
 	'showReset'   => ! empty( $attributes['showReset'] ),
 	'enableQuote' => ! empty( $attributes['enableQuote'] ),
 );
 
-$steil_wrapper = get_block_wrapper_attributes(
+$steil_cfg_wrapper = get_block_wrapper_attributes(
 	array(
-		'class'         => 'steil-cfg steil-cfg--' . $steil_position,
-		'data-position' => $steil_position,
+		'class'         => 'steil-cfg steil-cfg--' . $steil_cfg_position,
+		'data-position' => $steil_cfg_position,
 	)
 );
 ?>
-<div <?php echo $steil_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-	<div class="steil-cfg__stage" style="height:<?php echo esc_attr( $steil_height ); ?>px">
-		<canvas class="steil-cfg__canvas" aria-label="<?php echo esc_attr( $steil_config['title'] ); ?>"></canvas>
-		<div class="steil-cfg__loading"><?php echo esc_html__( 'Loading 3D model…', 'steil-3d-configurator' ); ?></div>
+<div <?php echo $steil_cfg_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+	<div class="steil-cfg__stage" style="height:<?php echo esc_attr( $steil_cfg_height ); ?>px">
+		<canvas class="steil-cfg__canvas" aria-label="<?php echo esc_attr( $steil_cfg_config['title'] ); ?>"></canvas>
+		<div class="steil-cfg__loading"><?php echo esc_html__( 'Loading 3D model…', '3d-product-configurator-block' ); ?></div>
 	</div>
 	<div class="steil-cfg__panel" aria-live="polite"></div>
 	<script type="application/json" class="steil-cfg__data">
-		<?php echo wp_json_encode( $steil_data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		<?php echo wp_json_encode( $steil_cfg_data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</script>
 </div>

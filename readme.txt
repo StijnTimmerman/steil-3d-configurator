@@ -1,14 +1,14 @@
-=== Steil 3D Configurator ===
+=== 3D Product Configurator Block ===
 Contributors: stijntimmerman
 Tags: 3d, configurator, gutenberg, block, product
 Requires at least: 6.5
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 0.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-3D product configurator block: upload a GLB or FBX model, map parts to colour palettes, and let visitors configure it and request a quote.
+Show an interactive 3D product on any page. Visitors pick colours per part and a finish, then request a quote. Upload your own GLB or FBX model.
 
 == Description ==
 

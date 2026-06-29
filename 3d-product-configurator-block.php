@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       Steil 3D Configurator
- * Description:       A 3D product configurator Gutenberg block. Upload a GLB model, map its parts to colour palettes, and let visitors configure the product and request a quote.
+ * Plugin Name:       3D Product Configurator Block
+ * Description:       Show an interactive 3D product, let visitors choose colours per part and a finish, and request a quote. Upload your own GLB or FBX model.
  * Version:           0.0.1
  * Requires at least: 6.5
  * Requires PHP:      7.4
@@ -9,7 +9,7 @@
  * Author URI:        https://steildigital.nl
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       steil-3d-configurator
+ * Text Domain:       3d-product-configurator-block
  * Domain Path:       /languages
  *
  * @package SteilConfigurator
