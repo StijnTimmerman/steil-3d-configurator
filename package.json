@@ -19,7 +19,7 @@
 		"lint:js": "wp-scripts lint-js",
 		"lint:css": "wp-scripts lint-style",
 		"make:sample": "node scripts/make-sample-glb.mjs",
-		"make:pot": "wp-scripts i18n-make-pot . languages/steil-3d-configurator.pot",
+		"make:pot": "wp i18n make-pot . languages/steil-3d-configurator.pot --domain=steil-3d-configurator --exclude=node_modules,build",
 		"plugin-zip": "wp-scripts plugin-zip"
 	},
 	"files": [
@@ -27,10 +27,14 @@
 		"includes",
 		"assets",
 		"languages",
+		"src",
+		"webpack.config.js",
 		"steil-3d-configurator.php",
 		"uninstall.php",
 		"readme.txt",
-		"LICENSE"
+		"README.md",
+		"LICENSE",
+		"NOTICE"
 	],
 	"devDependencies": {
 		"@wordpress/scripts": "^30.23.0",

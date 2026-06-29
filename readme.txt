@@ -1,6 +1,6 @@
 === Steil 3D Configurator ===
 Contributors: steildigital
-Tags: 3d, configurator, gutenberg, block, three.js
+Tags: 3d, configurator, gutenberg, block, product
 Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -8,7 +8,7 @@ Stable tag: 0.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A 3D product configurator block. Upload a GLB model, map its parts to colour palettes, and let visitors configure the product and request a quote.
+3D product configurator block: upload a GLB or FBX model, map parts to colour palettes, and let visitors configure it and request a quote.
 
 == Description ==
 
@@ -41,7 +41,17 @@ Each "part" has one or more match terms. Any mesh or material whose name contain
 = Where do quote requests go? =
 To the site admin email by default. Use the `steil_cfg_quote_recipient` filter to change it.
 
+== Screenshots ==
+
+1. The configurator on the front end: rotate the product, pick a colour per part and a finish.
+2. The product editor in the WordPress admin, with a live 3D preview and part-to-palette mapping.
+
 == Changelog ==
 
 = 0.0.1 =
 * Initial release: configurator block, glTF/GLB + FBX upload, part mapping, palettes, finishes, quote request with screenshot, bundled sample product.
+
+== Upgrade Notice ==
+
+= 0.0.1 =
+First release.
