@@ -1,5 +1,5 @@
 === Steil 3D Configurator ===
-Contributors: steildigital
+Contributors: stijntimmerman
 Tags: 3d, configurator, gutenberg, block, product
 Requires at least: 6.5
 Tested up to: 6.8
