@@ -6,8 +6,7 @@
  * hidden input that saves with the post (sanitised server-side).
  */
 import { __ } from '@wordpress/i18n';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { loadModel } from '../engine/load-model';
 import './product-editor.scss';
 
 const admin = window.steilCfgAdmin || { pluginUrl: '' };
@@ -87,7 +86,7 @@ function init() {
 	// --- model section ---
 	function renderModelSection() {
 		const box = el( 'div', 'steil-pe__section' );
-		box.appendChild( el( 'h3', null, __( '3D model (GLB)', 'steil-3d-configurator' ) ) );
+		box.appendChild( el( 'h3', null, __( '3D model (GLB or FBX)', 'steil-3d-configurator' ) ) );
 
 		const current = resolveUrl( mount.dataset.modelUrl || state.model_url );
 		const label = el(
@@ -99,7 +98,7 @@ function init() {
 		);
 		box.appendChild( label );
 
-		const pick = el( 'button', 'button', __( 'Select / upload GLB', 'steil-3d-configurator' ) );
+		const pick = el( 'button', 'button', __( 'Select / upload model', 'steil-3d-configurator' ) );
 		pick.type = 'button';
 		pick.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
@@ -125,7 +124,7 @@ function init() {
 			return;
 		}
 		const frame = window.wp.media( {
-			title: __( 'Select or upload a GLB model', 'steil-3d-configurator' ),
+			title: __( 'Select or upload a 3D model (GLB or FBX)', 'steil-3d-configurator' ),
 			button: { text: __( 'Use this model', 'steil-3d-configurator' ) },
 			multiple: false,
 		} );
@@ -146,30 +145,32 @@ function init() {
 			btn.disabled = true;
 			btn.textContent = __( 'Loading…', 'steil-3d-configurator' );
 		}
-		new GLTFLoader().load(
-			resolveUrl( url ),
-			( gltf ) => {
+		loadModel( resolveUrl( url ) )
+			.then( ( root ) => {
 				const names = new Set();
-				gltf.scene.traverse( ( node ) => {
+				root.traverse( ( node ) => {
 					if ( node.isMesh ) {
 						if ( node.name ) {
 							names.add( node.name );
 						}
-						if ( node.material && node.material.name ) {
-							names.add( node.material.name );
-						}
+						const mats = Array.isArray( node.material )
+							? node.material
+							: [ node.material ];
+						mats.forEach( ( m ) => {
+							if ( m && m.name ) {
+								names.add( m.name );
+							}
+						} );
 					}
 				} );
 				detectedNames = Array.from( names );
 				render();
-			},
-			undefined,
-			() => {
+			} )
+			.catch( () => {
 				detectedNames = [];
 				render();
-				window.alert( __( 'Could not read the model. Is it a valid GLB/glTF file?', 'steil-3d-configurator' ) );
-			}
-		);
+				window.alert( __( 'Could not read the model. Is it a valid GLB/glTF or FBX file?', 'steil-3d-configurator' ) );
+			} );
 	}
 
 	function renderDetected() {

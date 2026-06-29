@@ -16,7 +16,7 @@ Steil 3D Configurator adds a Gutenberg block that shows an interactive 3D produc
 
 Everything is editable from the WordPress admin:
 
-* **Configurator products** — a Custom Post Type. Upload a GLB/glTF model, let the editor detect its parts, and assign a colour palette, finishes and defaults to each. Reuse the same product across many pages.
+* **Configurator products** — a Custom Post Type. Upload a glTF/GLB or FBX model, let the editor detect its parts, and assign a colour palette, finishes and defaults to each. Reuse the same product across many pages.
 * **The block** — pick a product, set the height, choose where the controls sit, and toggle the finish selector, reset button and quote form.
 
 Built on [Three.js](https://threejs.org). Works with classic and block (FSE) themes; styles are scoped so they don't clash with your theme. No external services or CDNs — everything is bundled locally.
@@ -27,13 +27,13 @@ A sample "Lounge chair" product is created on activation so you can try the bloc
 
 1. Upload the plugin zip via *Plugins → Add New → Upload Plugin*, or copy the folder to `wp-content/plugins/`.
 2. Activate it. A sample configurator product is created automatically.
-3. Go to *3D Configurator* to create your own product: upload a GLB, click "Detect parts from model", and assign palettes.
+3. Go to *3D Configurator* to create your own product: upload a model (GLB or FBX), click "Detect parts from model", and assign palettes.
 4. Add the **3D Product Configurator** block to any page and pick your product.
 
 == Frequently Asked Questions ==
 
 = What model formats are supported? =
-GLB and glTF 2.0. GLB (single binary file) is recommended.
+glTF/GLB 2.0 and FBX. GLB (a single binary file) is recommended for the smallest, most portable models.
 
 = How does part recolouring work? =
 Each "part" has one or more match terms. Any mesh or material whose name contains a match term is recoloured with that part's palette. Use "Detect parts from model" to see the available names.
@@ -44,4 +44,4 @@ To the site admin email by default. Use the `steil_cfg_quote_recipient` filter t
 == Changelog ==
 
 = 0.0.1 =
-* Initial release: configurator block, GLB upload + part mapping, palettes, finishes, quote request with screenshot, bundled sample product.
+* Initial release: configurator block, glTF/GLB + FBX upload, part mapping, palettes, finishes, quote request with screenshot, bundled sample product.

@@ -22,7 +22,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { loadModel } from './load-model';
 
 const hexToInt = ( hex ) => parseInt( String( hex ).replace( '#', '' ), 16 ) || 0x999999;
 
@@ -196,41 +196,31 @@ export function createConfigurator( canvas, config ) {
 		renderer.render( scene, camera );
 	};
 
-	const loader = new GLTFLoader();
-	const ready = new Promise( ( resolve, reject ) => {
-		if ( ! config.modelUrl ) {
-			reject( new Error( 'No model URL configured.' ) );
-			return;
-		}
-		loader.load(
-			config.modelUrl,
-			( gltf ) => {
-				model = gltf.scene;
-				model.traverse( ( node ) => {
-					if ( ! node.isMesh ) {
-						return;
-					}
-					node.castShadow = true;
-					node.receiveShadow = true;
-					const part = partForMesh( node, parts );
-					if ( part ) {
-						if ( ! partMaterials[ part.key ] ) {
-							partMaterials[ part.key ] = makeMaterial(
-								part,
-								node.material
-							);
-						}
-						node.material = partMaterials[ part.key ];
-					}
-				} );
-				scene.add( model );
-				frameModel( model );
-				tick();
-				resolve( api );
-			},
-			undefined,
-			( err ) => reject( err )
-		);
+	const ready = loadModel( config.modelUrl ).then( ( root ) => {
+		model = root;
+		model.traverse( ( node ) => {
+			if ( ! node.isMesh ) {
+				return;
+			}
+			node.castShadow = true;
+			node.receiveShadow = true;
+			const part = partForMesh( node, parts );
+			if ( part ) {
+				if ( ! partMaterials[ part.key ] ) {
+					partMaterials[ part.key ] = makeMaterial(
+						part,
+						Array.isArray( node.material )
+							? node.material[ 0 ]
+							: node.material
+					);
+				}
+				node.material = partMaterials[ part.key ];
+			}
+		} );
+		scene.add( model );
+		frameModel( model );
+		tick();
+		return api;
 	} );
 
 	window.addEventListener( 'resize', resize );

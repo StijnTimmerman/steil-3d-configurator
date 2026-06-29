@@ -34,6 +34,7 @@ class Assets {
 	public function allow_glb_uploads( $mimes ) {
 		$mimes['glb']  = 'model/gltf-binary';
 		$mimes['gltf'] = 'model/gltf+json';
+		$mimes['fbx']  = 'application/octet-stream';
 		return $mimes;
 	}
 
@@ -57,6 +58,9 @@ class Assets {
 		} elseif ( 'gltf' === $ext ) {
 			$data['ext']  = 'gltf';
 			$data['type'] = 'model/gltf+json';
+		} elseif ( 'fbx' === $ext ) {
+			$data['ext']  = 'fbx';
+			$data['type'] = 'application/octet-stream';
 		}
 		return $data;
 	}

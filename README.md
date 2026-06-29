@@ -1,12 +1,12 @@
 # Steil 3D Configurator
 
-A WordPress plugin that adds a **3D product configurator** Gutenberg block. Upload a GLB model, map its parts to colour palettes in the CMS, and let visitors rotate the product, pick colours and a finish, and request a quote — with a screenshot of their configuration attached.
+A WordPress plugin that adds a **3D product configurator** Gutenberg block. Upload a glTF/GLB or FBX model, map its parts to colour palettes in the CMS, and let visitors rotate the product, pick colours and a finish, and request a quote — with a screenshot of their configuration attached.
 
-Built on [Three.js](https://threejs.org). The rendering engine is generalised from the open-source [mini-configurator](https://github.com/StijnTimmerman/mini-configurator) (MIT, Steil Digital): instead of a fixed primitive model it loads any GLB and recolours named parts. Three.js is **bundled locally** (no CDN), so the plugin is WordPress.org-ready.
+Built on [Three.js](https://threejs.org). The rendering engine is generalised from the open-source [mini-configurator](https://github.com/StijnTimmerman/mini-configurator) (MIT, Steil Digital): instead of a fixed primitive model it loads any glTF/GLB or FBX model and recolours named parts. Three.js is **bundled locally** (no CDN), so the plugin is WordPress.org-ready.
 
 ## Features (v0.0.1)
 
-- **Configurator products** (Custom Post Type): upload a GLB, auto-detect its mesh/material names, and assign each part a colour palette, finishes and defaults. Reusable across pages.
+- **Configurator products** (Custom Post Type): upload a glTF/GLB or FBX model, auto-detect its mesh/material names, and assign each part a colour palette, finishes and defaults. Reusable across pages.
 - **The block** (`steil/configurator`): choose a product, set height and controls position, toggle the finish selector / reset button / quote form. Works in classic and block (FSE) themes; styles scoped under `.steil-cfg`.
 - **Quote requests**: visitors submit name/email/message; the chosen configuration and a PNG screenshot are emailed to the admin. Honeypot spam protection.
 - **Bundled sample**: a "Lounge chair" product is seeded on activation so the block works out of the box.
@@ -21,12 +21,12 @@ includes/                   # PHP
   class-product-store.php   #   config schema, defaults, sanitisation
   class-rest.php            #   REST: product list/config + quote
   class-quote.php           #   quote validation + email + screenshot
-  class-assets.php          #   admin enqueue + GLB upload support
+  class-assets.php          #   admin enqueue + GLB/FBX upload support
   class-block.php           #   block registration + front-end runtime
 src/
   configurator/             # the block (block.json, edit, view, render.php, styles)
-  engine/                   # configurator-engine.js — GLB load, recolour, finish, screenshot
-  admin/                    # product-editor.js — GLB introspection + palette mapping
+  engine/                   # configurator-engine.js (recolour/finish/screenshot) + load-model.js (glTF/GLB + FBX)
+  admin/                    # product-editor.js — model introspection + palette mapping
 scripts/make-sample-glb.mjs # generates assets/models/lounge-chair.glb
 ```
 
@@ -55,10 +55,6 @@ Symlink/copy the folder into `wp-content/plugins/` and activate.
 npm run build
 npm run plugin-zip    # → steil-3d-configurator.zip (installable via Plugins → Upload)
 ```
-
-## Publish to WordPress.org
-
-`readme.txt` follows the WP.org format. Once v1 is stable, submit the plugin for review and deploy tags via the WP.org SVN repository.
 
 ## Licence
 
