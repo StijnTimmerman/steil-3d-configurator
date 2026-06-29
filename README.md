@@ -4,7 +4,7 @@ A WordPress plugin that adds a **3D product configurator** Gutenberg block. Uplo
 
 Built on [Three.js](https://threejs.org). The rendering engine is generalised from the open-source [mini-configurator](https://github.com/StijnTimmerman/mini-configurator) (MIT, Steil Digital): instead of a fixed primitive model it loads any glTF/GLB or FBX model and recolours named parts. Three.js is **bundled locally** (no CDN), so the plugin is WordPress.org-ready.
 
-## Features (v0.0.1)
+## Features (v1.0.0)
 
 - **Configurator products** (Custom Post Type): upload a glTF/GLB or FBX model, auto-detect its mesh/material names, and assign each part a colour palette, finishes and defaults. Reusable across pages.
 - **The block** (`steil/configurator`): choose a product, set height and controls position, toggle the finish selector / reset button / quote form. Works in classic and block (FSE) themes; styles scoped under `.steil-cfg`.

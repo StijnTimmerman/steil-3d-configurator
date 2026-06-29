@@ -4,7 +4,7 @@ Tags: 3d, configurator, gutenberg, block, product
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.0.1
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,10 +48,10 @@ To the site admin email by default. Use the `steil_cfg_quote_recipient` filter t
 
 == Changelog ==
 
-= 0.0.1 =
+= 1.0.0 =
 * Initial release: configurator block, glTF/GLB + FBX upload, part mapping, palettes, finishes, quote request with screenshot, bundled sample product.
 
 == Upgrade Notice ==
 
-= 0.0.1 =
+= 1.0.0 =
 First release.
