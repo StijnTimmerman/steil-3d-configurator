@@ -1,0 +1,42 @@
+{
+	"name": "steil-3d-configurator",
+	"version": "0.0.1",
+	"description": "3D product configurator block for WordPress — upload a GLB model, map parts to color palettes, let visitors configure and request a quote.",
+	"author": "Steil Digital",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"wordpress",
+		"gutenberg",
+		"block",
+		"three.js",
+		"3d",
+		"configurator"
+	],
+	"scripts": {
+		"build": "wp-scripts build --webpack-copy-php",
+		"start": "wp-scripts start --webpack-copy-php",
+		"format": "wp-scripts format",
+		"lint:js": "wp-scripts lint-js",
+		"lint:css": "wp-scripts lint-style",
+		"make:sample": "node scripts/make-sample-glb.mjs",
+		"make:pot": "wp-scripts i18n-make-pot . languages/steil-3d-configurator.pot",
+		"plugin-zip": "wp-scripts plugin-zip"
+	},
+	"files": [
+		"build",
+		"includes",
+		"assets",
+		"languages",
+		"steil-3d-configurator.php",
+		"uninstall.php",
+		"readme.txt",
+		"LICENSE"
+	],
+	"devDependencies": {
+		"@wordpress/scripts": "^30.23.0",
+		"sass": "^1.92.1"
+	},
+	"dependencies": {
+		"three": "^0.180.0"
+	}
+}

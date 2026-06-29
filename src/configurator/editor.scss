@@ -1,0 +1,38 @@
+/**
+ * Editor placeholder card.
+ */
+.steil-cfg-editor-card {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px dashed rgba( 0, 0, 0, 0.2 );
+	border-radius: 14px;
+	background: rgba( 0, 0, 0, 0.02 );
+	text-align: center;
+	padding: 32px;
+
+	.steil-cfg-editor-inner {
+		max-width: 360px;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		align-items: center;
+	}
+
+	.steil-cfg-editor-icon {
+		font-size: 34px;
+		width: 34px;
+		height: 34px;
+		opacity: 0.6;
+	}
+
+	p {
+		margin: 0;
+		opacity: 0.8;
+	}
+
+	.steil-cfg-editor-hint {
+		font-size: 0.8rem;
+		opacity: 0.6;
+	}
+}

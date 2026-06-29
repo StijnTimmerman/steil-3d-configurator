@@ -1,0 +1,7 @@
+node_modules/
+build/
+vendor/
+*.log
+.DS_Store
+.cache/
+steil-3d-configurator.zip

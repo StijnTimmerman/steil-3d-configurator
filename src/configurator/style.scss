@@ -1,0 +1,229 @@
+/**
+ * Front-end styles for the configurator block.
+ * Scoped under .steil-cfg so themes don't bleed in (and vice versa).
+ */
+
+.steil-cfg {
+	--steil-accent: #2b6cb0;
+	--steil-ink: #1c1b1a;
+	--steil-line: rgba( 0, 0, 0, 0.12 );
+
+	display: flex;
+	gap: 24px;
+	width: 100%;
+	box-sizing: border-box;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	&--side {
+		flex-direction: row;
+		align-items: stretch;
+
+		.steil-cfg__stage {
+			flex: 1 1 60%;
+		}
+		.steil-cfg__panel {
+			flex: 1 1 40%;
+			max-width: 380px;
+		}
+	}
+
+	&--bottom {
+		flex-direction: column;
+	}
+
+	&__stage {
+		position: relative;
+		min-height: 280px;
+		border-radius: 14px;
+		overflow: hidden;
+		background: rgba( 0, 0, 0, 0.03 );
+	}
+
+	&__canvas {
+		display: block;
+		width: 100%;
+		height: 100%;
+		touch-action: none;
+		cursor: grab;
+
+		&:active {
+			cursor: grabbing;
+		}
+	}
+
+	&__loading {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.95rem;
+		color: var( --steil-ink );
+		opacity: 0.7;
+
+		&.is-error {
+			color: #b42318;
+			opacity: 1;
+		}
+	}
+
+	&__panel {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+		justify-content: center;
+	}
+
+	&__row {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__label {
+		font-weight: 600;
+		font-size: 0.9rem;
+		letter-spacing: 0.01em;
+	}
+
+	&__swatches {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	&__swatch {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+		border: 2px solid var( --steil-line );
+		padding: 0;
+		cursor: pointer;
+		transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+		&:hover {
+			transform: scale( 1.08 );
+		}
+
+		&.is-active {
+			border-color: var( --steil-ink );
+			box-shadow: 0 0 0 2px #fff, 0 0 0 4px var( --steil-ink );
+		}
+	}
+
+	&__finish {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	&__chip {
+		padding: 7px 14px;
+		border-radius: 999px;
+		border: 1.5px solid var( --steil-line );
+		background: transparent;
+		font-size: 0.85rem;
+		cursor: pointer;
+		transition: background 0.15s ease, color 0.15s ease;
+
+		&.is-active {
+			background: var( --steil-ink );
+			color: #fff;
+			border-color: var( --steil-ink );
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-top: 4px;
+	}
+
+	&__btn {
+		padding: 11px 22px;
+		border-radius: 8px;
+		font-size: 0.95rem;
+		font-weight: 600;
+		cursor: pointer;
+		border: 1.5px solid var( --steil-ink );
+		transition: transform 0.15s ease, opacity 0.15s ease;
+
+		&:hover {
+			transform: translateY( -1px );
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: default;
+		}
+
+		&--primary {
+			background: var( --steil-ink );
+			color: #fff;
+		}
+
+		&--ghost {
+			background: transparent;
+			color: var( --steil-ink );
+		}
+	}
+
+	&__quote {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin-top: 8px;
+		padding: 16px;
+		border: 1px solid var( --steil-line );
+		border-radius: 12px;
+	}
+
+	&__summary {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		font-size: 0.85rem;
+		margin-bottom: 4px;
+	}
+
+	&__summary-item {
+		color: rgba( 0, 0, 0, 0.7 );
+	}
+
+	&__input {
+		width: 100%;
+		padding: 10px 12px;
+		border: 1px solid var( --steil-line );
+		border-radius: 8px;
+		font: inherit;
+	}
+
+	&__status {
+		font-size: 0.85rem;
+		margin: 0;
+
+		&.is-ok {
+			color: #2f855a;
+		}
+	}
+
+	&__notice {
+		padding: 14px;
+		border: 1px dashed var( --steil-line );
+		border-radius: 8px;
+	}
+}
+
+@media ( max-width: 781px ) {
+	.steil-cfg--side {
+		flex-direction: column;
+
+		.steil-cfg__panel {
+			max-width: none;
+		}
+	}
+}

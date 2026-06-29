@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "steil/configurator",
+	"version": "0.0.1",
+	"title": "3D Product Configurator",
+	"category": "media",
+	"icon": "art",
+	"description": "Show a 3D product, let visitors pick colours per part and a finish, and request a quote.",
+	"keywords": [ "3d", "configurator", "product", "three.js" ],
+	"textdomain": "steil-3d-configurator",
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"productId": {
+			"type": "number",
+			"default": 0
+		},
+		"height": {
+			"type": "number",
+			"default": 520
+		},
+		"showFinish": {
+			"type": "boolean",
+			"default": true
+		},
+		"showReset": {
+			"type": "boolean",
+			"default": true
+		},
+		"enableQuote": {
+			"type": "boolean",
+			"default": true
+		},
+		"controlsPosition": {
+			"type": "string",
+			"default": "side"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}

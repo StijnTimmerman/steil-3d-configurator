@@ -1,0 +1,109 @@
+/**
+ * Product editor meta box styles.
+ */
+#steil-cfg-product-editor {
+	.steil-pe__section {
+		padding: 16px 0;
+		border-bottom: 1px solid #e2e4e7;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+
+		h3 {
+			margin: 0 0 10px;
+			font-size: 14px;
+		}
+
+		h4 {
+			margin: 0 0 8px;
+		}
+	}
+
+	.steil-pe__muted {
+		color: #757575;
+		font-size: 12px;
+		margin: 6px 0;
+	}
+
+	.steil-pe__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.steil-pe__tag {
+		background: #f0f0f1;
+		border-radius: 4px;
+		padding: 2px 8px;
+		font-size: 12px;
+	}
+
+	.steil-pe__card {
+		border: 1px solid #dcdcde;
+		border-radius: 8px;
+		padding: 14px;
+		margin-bottom: 12px;
+		background: #fff;
+	}
+
+	.steil-pe__row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		align-items: flex-end;
+		margin-bottom: 10px;
+	}
+
+	.steil-pe__field {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		font-size: 12px;
+		font-weight: 600;
+
+		input {
+			font-weight: 400;
+		}
+
+		&--num {
+			max-width: 110px;
+		}
+	}
+
+	.steil-pe__palette {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		align-items: center;
+		margin: 10px 0;
+	}
+
+	.steil-pe__swatch-edit {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		border: 1px solid #e2e4e7;
+		border-radius: 6px;
+		padding: 4px 6px;
+	}
+
+	.steil-pe__swatch-name {
+		width: 90px;
+	}
+
+	.steil-pe__default {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 12px;
+		font-weight: 600;
+	}
+
+	.button-link-delete {
+		background: none;
+		border: 0;
+		color: #b32d2e;
+		cursor: pointer;
+	}
+}

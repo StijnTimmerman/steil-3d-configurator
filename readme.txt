@@ -1,0 +1,47 @@
+=== Steil 3D Configurator ===
+Contributors: steildigital
+Tags: 3d, configurator, gutenberg, block, three.js
+Requires at least: 6.5
+Tested up to: 6.8
+Requires PHP: 7.4
+Stable tag: 0.0.1
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+A 3D product configurator block. Upload a GLB model, map its parts to colour palettes, and let visitors configure the product and request a quote.
+
+== Description ==
+
+Steil 3D Configurator adds a Gutenberg block that shows an interactive 3D product. Visitors can rotate the model, pick a colour per part and a finish, and send a quote request with their configuration (including a screenshot of what they built).
+
+Everything is editable from the WordPress admin:
+
+* **Configurator products** — a Custom Post Type. Upload a GLB/glTF model, let the editor detect its parts, and assign a colour palette, finishes and defaults to each. Reuse the same product across many pages.
+* **The block** — pick a product, set the height, choose where the controls sit, and toggle the finish selector, reset button and quote form.
+
+Built on [Three.js](https://threejs.org). Works with classic and block (FSE) themes; styles are scoped so they don't clash with your theme. No external services or CDNs — everything is bundled locally.
+
+A sample "Lounge chair" product is created on activation so you can try the block immediately.
+
+== Installation ==
+
+1. Upload the plugin zip via *Plugins → Add New → Upload Plugin*, or copy the folder to `wp-content/plugins/`.
+2. Activate it. A sample configurator product is created automatically.
+3. Go to *3D Configurator* to create your own product: upload a GLB, click "Detect parts from model", and assign palettes.
+4. Add the **3D Product Configurator** block to any page and pick your product.
+
+== Frequently Asked Questions ==
+
+= What model formats are supported? =
+GLB and glTF 2.0. GLB (single binary file) is recommended.
+
+= How does part recolouring work? =
+Each "part" has one or more match terms. Any mesh or material whose name contains a match term is recoloured with that part's palette. Use "Detect parts from model" to see the available names.
+
+= Where do quote requests go? =
+To the site admin email by default. Use the `steil_cfg_quote_recipient` filter to change it.
+
+== Changelog ==
+
+= 0.0.1 =
+* Initial release: configurator block, GLB upload + part mapping, palettes, finishes, quote request with screenshot, bundled sample product.
