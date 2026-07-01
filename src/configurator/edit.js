@@ -34,7 +34,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		products && products.find( ( p ) => p.id === productId );
 
 	const productOptions = [
-		{ value: 0, label: __( 'Select a product…', '3d-product-configurator-block' ) },
+		{ value: 0, label: __( 'Select a product…', 'steil-3d-configurator' ) },
 		...( products || [] ).map( ( p ) => ( {
 			value: p.id,
 			label: p.title,
@@ -44,12 +44,12 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Product', '3d-product-configurator-block' ) }>
+				<PanelBody title={ __( 'Product', 'steil-3d-configurator' ) }>
 					{ null === products ? (
 						<Spinner />
 					) : (
 						<SelectControl
-							label={ __( 'Configurator product', '3d-product-configurator-block' ) }
+							label={ __( 'Configurator product', 'steil-3d-configurator' ) }
 							value={ productId }
 							options={ productOptions }
 							onChange={ ( value ) =>
@@ -62,14 +62,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						<Notice status="warning" isDismissible={ false }>
 							{ __(
 								'No configurator products yet. Create one under "3D Configurator".',
-								'3d-product-configurator-block'
+								'steil-3d-configurator'
 							) }
 						</Notice>
 					) }
 				</PanelBody>
-				<PanelBody title={ __( 'Layout', '3d-product-configurator-block' ) }>
+				<PanelBody title={ __( 'Layout', 'steil-3d-configurator' ) }>
 					<RangeControl
-						label={ __( 'Height (px)', '3d-product-configurator-block' ) }
+						label={ __( 'Height (px)', 'steil-3d-configurator' ) }
 						value={ height }
 						min={ 320 }
 						max={ 900 }
@@ -77,11 +77,11 @@ export default function Edit( { attributes, setAttributes } ) {
 						__nextHasNoMarginBottom
 					/>
 					<SelectControl
-						label={ __( 'Controls position', '3d-product-configurator-block' ) }
+						label={ __( 'Controls position', 'steil-3d-configurator' ) }
 						value={ controlsPosition }
 						options={ [
-							{ value: 'side', label: __( 'Side', '3d-product-configurator-block' ) },
-							{ value: 'bottom', label: __( 'Bottom', '3d-product-configurator-block' ) },
+							{ value: 'side', label: __( 'Side', 'steil-3d-configurator' ) },
+							{ value: 'bottom', label: __( 'Bottom', 'steil-3d-configurator' ) },
 						] }
 						onChange={ ( value ) =>
 							setAttributes( { controlsPosition: value } )
@@ -89,19 +89,19 @@ export default function Edit( { attributes, setAttributes } ) {
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
-						label={ __( 'Show finish selector', '3d-product-configurator-block' ) }
+						label={ __( 'Show finish selector', 'steil-3d-configurator' ) }
 						checked={ showFinish }
 						onChange={ ( value ) => setAttributes( { showFinish: value } ) }
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
-						label={ __( 'Show reset button', '3d-product-configurator-block' ) }
+						label={ __( 'Show reset button', 'steil-3d-configurator' ) }
 						checked={ showReset }
 						onChange={ ( value ) => setAttributes( { showReset: value } ) }
 						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
-						label={ __( 'Enable quote request', '3d-product-configurator-block' ) }
+						label={ __( 'Enable quote request', 'steil-3d-configurator' ) }
 						checked={ enableQuote }
 						onChange={ ( value ) => setAttributes( { enableQuote: value } ) }
 						__nextHasNoMarginBottom
@@ -112,24 +112,24 @@ export default function Edit( { attributes, setAttributes } ) {
 			<div { ...blockProps }>
 				<div className="steil-cfg-editor-inner">
 					<span className="steil-cfg-editor-icon dashicons dashicons-art" />
-					<strong>{ __( '3D Product Configurator', '3d-product-configurator-block' ) }</strong>
+					<strong>{ __( 'Steil 3D Configurator', 'steil-3d-configurator' ) }</strong>
 					{ selected ? (
 						<p>
-							{ __( 'Product:', '3d-product-configurator-block' ) }{ ' ' }
+							{ __( 'Product:', 'steil-3d-configurator' ) }{ ' ' }
 							<em>{ selected.title }</em>
 						</p>
 					) : (
 						<p>
 							{ __(
 								'Choose a configurator product in the block settings.',
-								'3d-product-configurator-block'
+								'steil-3d-configurator'
 							) }
 						</p>
 					) }
 					<p className="steil-cfg-editor-hint">
 						{ __(
 							'The interactive 3D preview appears on the published page.',
-							'3d-product-configurator-block'
+							'steil-3d-configurator'
 						) }
 					</p>
 				</div>

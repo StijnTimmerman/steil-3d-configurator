@@ -1,4 +1,4 @@
-# 3D Product Configurator Block
+# Steil 3D Configurator
 
 A WordPress plugin that adds a **3D product configurator** Gutenberg block. Upload a glTF/GLB or FBX model, map its parts to colour palettes in the CMS, and let visitors rotate the product, pick colours and a finish, and request a quote — with a screenshot of their configuration attached.
 
@@ -14,7 +14,7 @@ Built on [Three.js](https://threejs.org). The rendering engine is generalised fr
 ## Architecture
 
 ```
-3d-product-configurator-block.php   # plugin bootstrap (GPLv2+)
+steil-3d-configurator.php   # plugin bootstrap (GPLv2+)
 includes/                   # PHP
   class-plugin.php          #   wires components
   class-product-cpt.php     #   CPT + editor meta box
@@ -53,7 +53,7 @@ Symlink/copy the folder into `wp-content/plugins/` and activate.
 
 ```bash
 npm run build
-npm run plugin-zip    # → 3d-product-configurator-block.zip (installable via Plugins → Upload)
+npm run plugin-zip    # → steil-3d-configurator.zip (installable via Plugins → Upload)
 ```
 
 ## Licence

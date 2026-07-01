@@ -1,4 +1,4 @@
-=== 3D Product Configurator Block ===
+=== Steil 3D Configurator ===
 Contributors: stijntimmerman
 Tags: 3d, configurator, gutenberg, block, product
 Requires at least: 6.5
@@ -28,7 +28,7 @@ A sample "Lounge chair" product is created on activation so you can try the bloc
 1. Upload the plugin zip via *Plugins → Add New → Upload Plugin*, or copy the folder to `wp-content/plugins/`.
 2. Activate it. A sample configurator product is created automatically.
 3. Go to *3D Configurator* to create your own product: upload a model (GLB or FBX), click "Detect parts from model", and assign palettes.
-4. Add the **3D Product Configurator** block to any page and pick your product.
+4. Add the **Steil 3D Configurator** block to any page and pick your product.
 
 == Frequently Asked Questions ==
 

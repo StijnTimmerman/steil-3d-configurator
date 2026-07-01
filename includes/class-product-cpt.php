@@ -37,11 +37,11 @@ class Product_CPT {
 			self::POST_TYPE,
 			array(
 				'labels'       => array(
-					'name'          => __( 'Configurator products', '3d-product-configurator-block' ),
-					'singular_name' => __( 'Configurator product', '3d-product-configurator-block' ),
-					'add_new_item'  => __( 'Add configurator product', '3d-product-configurator-block' ),
-					'edit_item'     => __( 'Edit configurator product', '3d-product-configurator-block' ),
-					'menu_name'     => __( '3D Configurator', '3d-product-configurator-block' ),
+					'name'          => __( 'Configurator products', 'steil-3d-configurator' ),
+					'singular_name' => __( 'Configurator product', 'steil-3d-configurator' ),
+					'add_new_item'  => __( 'Add configurator product', 'steil-3d-configurator' ),
+					'edit_item'     => __( 'Edit configurator product', 'steil-3d-configurator' ),
+					'menu_name'     => __( '3D Configurator', 'steil-3d-configurator' ),
 				),
 				'public'       => false,
 				'show_ui'      => true,
@@ -58,7 +58,7 @@ class Product_CPT {
 	public function add_meta_box() {
 		add_meta_box(
 			'steil_cfg_editor',
-			__( 'Product configuration', '3d-product-configurator-block' ),
+			__( 'Product configuration', 'steil-3d-configurator' ),
 			array( $this, 'render_meta_box' ),
 			self::POST_TYPE,
 			'normal',
@@ -83,7 +83,7 @@ class Product_CPT {
 			esc_attr( Product_Store::resolve_model_url( $config ) )
 		);
 		echo '<input type="hidden" name="steil_cfg_config_json" id="steil-cfg-config-json" value="" />';
-		echo '<noscript><p>' . esc_html__( 'JavaScript is required to edit the configurator product.', '3d-product-configurator-block' ) . '</p></noscript>';
+		echo '<noscript><p>' . esc_html__( 'JavaScript is required to edit the configurator product.', 'steil-3d-configurator' ) . '</p></noscript>';
 	}
 
 	/**
@@ -134,7 +134,7 @@ class Product_CPT {
 		$post_id = wp_insert_post(
 			array(
 				'post_type'   => self::POST_TYPE,
-				'post_title'  => __( 'Lounge chair (sample)', '3d-product-configurator-block' ),
+				'post_title'  => __( 'Lounge chair (sample)', 'steil-3d-configurator' ),
 				'post_status' => 'publish',
 			)
 		);

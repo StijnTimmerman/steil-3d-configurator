@@ -32,7 +32,7 @@ $steil_cfg_config = $steil_cfg_product_id ? \SteilConfigurator\Product_Store::ge
 if ( ! $steil_cfg_config || empty( $steil_cfg_config['parts'] ) || empty( $steil_cfg_config['model_url'] ) ) {
 	if ( current_user_can( 'edit_posts' ) ) {
 		echo '<div ' . get_block_wrapper_attributes() . '><p class="steil-cfg__notice">' // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			. esc_html__( 'Configurator: select a configured product with a model and parts.', '3d-product-configurator-block' )
+			. esc_html__( 'Configurator: select a configured product with a model and parts.', 'steil-3d-configurator' )
 			. '</p></div>';
 	}
 	return;
@@ -59,7 +59,7 @@ $steil_cfg_wrapper = get_block_wrapper_attributes(
 <div <?php echo $steil_cfg_wrapper; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<div class="steil-cfg__stage" style="height:<?php echo esc_attr( $steil_cfg_height ); ?>px">
 		<canvas class="steil-cfg__canvas" aria-label="<?php echo esc_attr( $steil_cfg_config['title'] ); ?>"></canvas>
-		<div class="steil-cfg__loading"><?php echo esc_html__( 'Loading 3D model…', '3d-product-configurator-block' ); ?></div>
+		<div class="steil-cfg__loading"><?php echo esc_html__( 'Loading 3D model…', 'steil-3d-configurator' ); ?></div>
 	</div>
 	<div class="steil-cfg__panel" aria-live="polite"></div>
 	<script type="application/json" class="steil-cfg__data">

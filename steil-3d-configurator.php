@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       3D Product Configurator Block
+ * Plugin Name:       Steil 3D Configurator
  * Description:       Show an interactive 3D product, let visitors choose colours per part and a finish, and request a quote. Upload your own GLB or FBX model.
  * Version:           1.0.0
  * Requires at least: 6.5
@@ -9,7 +9,7 @@
  * Author URI:        https://steildigital.nl
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       3d-product-configurator-block
+ * Text Domain:       steil-3d-configurator
  * Domain Path:       /languages
  *
  * @package SteilConfigurator

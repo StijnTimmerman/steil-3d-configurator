@@ -35,9 +35,9 @@ const resolveUrl = ( url ) => {
 
 function defaultFinishes() {
 	return {
-		matte: { label: __( 'Matte', '3d-product-configurator-block' ), roughness: 0.85, metalness: 0.0 },
-		satin: { label: __( 'Satin', '3d-product-configurator-block' ), roughness: 0.45, metalness: 0.05 },
-		gloss: { label: __( 'Gloss', '3d-product-configurator-block' ), roughness: 0.12, metalness: 0.1 },
+		matte: { label: __( 'Matte', 'steil-3d-configurator' ), roughness: 0.85, metalness: 0.0 },
+		satin: { label: __( 'Satin', 'steil-3d-configurator' ), roughness: 0.45, metalness: 0.05 },
+		gloss: { label: __( 'Gloss', 'steil-3d-configurator' ), roughness: 0.12, metalness: 0.1 },
 	};
 }
 
@@ -112,14 +112,14 @@ function init() {
 		const url = resolveUrl( mount.dataset.modelUrl || state.model_url );
 		if ( ! url ) {
 			previewWrap.appendChild(
-				el( 'div', 'steil-pe__preview-empty', __( 'Upload a model to preview it here.', '3d-product-configurator-block' ) )
+				el( 'div', 'steil-pe__preview-empty', __( 'Upload a model to preview it here.', 'steil-3d-configurator' ) )
 			);
 			return;
 		}
 
 		const stage = el( 'div', 'steil-pe__preview-stage' );
 		const canvas = el( 'canvas', 'steil-pe__preview-canvas' );
-		const loading = el( 'div', 'steil-pe__preview-loading', __( 'Loading preview…', '3d-product-configurator-block' ) );
+		const loading = el( 'div', 'steil-pe__preview-loading', __( 'Loading preview…', 'steil-3d-configurator' ) );
 		stage.append( canvas, loading );
 		previewWrap.appendChild( stage );
 
@@ -134,11 +134,11 @@ function init() {
 			previewEngine.ready
 				.then( () => loading.remove() )
 				.catch( () => {
-					loading.textContent = __( 'Could not load preview.', '3d-product-configurator-block' );
+					loading.textContent = __( 'Could not load preview.', 'steil-3d-configurator' );
 					loading.classList.add( 'is-error' );
 				} );
 		} catch ( e ) {
-			loading.textContent = __( 'Could not load preview.', '3d-product-configurator-block' );
+			loading.textContent = __( 'Could not load preview.', 'steil-3d-configurator' );
 			loading.classList.add( 'is-error' );
 		}
 	}
@@ -156,19 +156,19 @@ function init() {
 	// --- model section ---
 	function renderModelSection() {
 		const box = el( 'div', 'steil-pe__section' );
-		box.appendChild( el( 'h3', null, __( '3D model (GLB or FBX)', '3d-product-configurator-block' ) ) );
+		box.appendChild( el( 'h3', null, __( '3D model (GLB or FBX)', 'steil-3d-configurator' ) ) );
 
 		const current = resolveUrl( mount.dataset.modelUrl || state.model_url );
 		const label = el(
 			'p',
 			'steil-pe__muted',
 			current
-				? __( 'A model is set. Choose another to replace it.', '3d-product-configurator-block' )
-				: __( 'No model selected yet.', '3d-product-configurator-block' )
+				? __( 'A model is set. Choose another to replace it.', 'steil-3d-configurator' )
+				: __( 'No model selected yet.', 'steil-3d-configurator' )
 		);
 		box.appendChild( label );
 
-		const pick = el( 'button', 'button', __( 'Select / upload model', '3d-product-configurator-block' ) );
+		const pick = el( 'button', 'button', __( 'Select / upload model', 'steil-3d-configurator' ) );
 		pick.type = 'button';
 		pick.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
@@ -177,7 +177,7 @@ function init() {
 		box.appendChild( pick );
 
 		if ( current ) {
-			const inspect = el( 'button', 'button', __( 'Detect parts from model', '3d-product-configurator-block' ) );
+			const inspect = el( 'button', 'button', __( 'Detect parts from model', 'steil-3d-configurator' ) );
 			inspect.type = 'button';
 			inspect.style.marginLeft = '8px';
 			inspect.addEventListener( 'click', ( e ) => {
@@ -186,7 +186,7 @@ function init() {
 			} );
 			box.appendChild( inspect );
 
-			const refresh = el( 'button', 'button', __( 'Refresh preview', '3d-product-configurator-block' ) );
+			const refresh = el( 'button', 'button', __( 'Refresh preview', 'steil-3d-configurator' ) );
 			refresh.type = 'button';
 			refresh.style.marginLeft = '8px';
 			refresh.addEventListener( 'click', ( e ) => {
@@ -203,8 +203,8 @@ function init() {
 			return;
 		}
 		const frame = window.wp.media( {
-			title: __( 'Select or upload a 3D model (GLB or FBX)', '3d-product-configurator-block' ),
-			button: { text: __( 'Use this model', '3d-product-configurator-block' ) },
+			title: __( 'Select or upload a 3D model (GLB or FBX)', 'steil-3d-configurator' ),
+			button: { text: __( 'Use this model', 'steil-3d-configurator' ) },
 			multiple: false,
 		} );
 		frame.on( 'select', () => {
@@ -223,7 +223,7 @@ function init() {
 	function introspect( url, btn ) {
 		if ( btn ) {
 			btn.disabled = true;
-			btn.textContent = __( 'Loading…', '3d-product-configurator-block' );
+			btn.textContent = __( 'Loading…', 'steil-3d-configurator' );
 		}
 		loadModel( resolveUrl( url ) )
 			.then( ( root ) => {
@@ -250,7 +250,7 @@ function init() {
 			.catch( () => {
 				detectedNames = [];
 				render();
-				window.alert( __( 'Could not read the model. Is it a valid GLB/glTF or FBX file?', '3d-product-configurator-block' ) );
+				window.alert( __( 'Could not read the model. Is it a valid GLB/glTF or FBX file?', 'steil-3d-configurator' ) );
 			} );
 	}
 
@@ -259,7 +259,7 @@ function init() {
 		if ( ! detectedNames.length ) {
 			return box;
 		}
-		box.appendChild( el( 'h4', null, __( 'Detected in model', '3d-product-configurator-block' ) ) );
+		box.appendChild( el( 'h4', null, __( 'Detected in model', 'steil-3d-configurator' ) ) );
 		const list = el( 'div', 'steil-pe__tags' );
 		detectedNames.forEach( ( n ) => list.appendChild( el( 'code', 'steil-pe__tag', n ) ) );
 		box.appendChild( list );
@@ -267,7 +267,7 @@ function init() {
 			el(
 				'p',
 				'steil-pe__muted',
-				__( 'Use these names in a part’s "match" field so its meshes get recoloured.', '3d-product-configurator-block' )
+				__( 'Use these names in a part’s "match" field so its meshes get recoloured.', 'steil-3d-configurator' )
 			)
 		);
 		return box;
@@ -276,19 +276,19 @@ function init() {
 	// --- parts ---
 	function renderParts() {
 		const box = el( 'div', 'steil-pe__section' );
-		box.appendChild( el( 'h3', null, __( 'Configurable parts', '3d-product-configurator-block' ) ) );
+		box.appendChild( el( 'h3', null, __( 'Configurable parts', 'steil-3d-configurator' ) ) );
 
 		state.parts.forEach( ( part, index ) => {
 			box.appendChild( renderPart( part, index ) );
 		} );
 
-		const add = el( 'button', 'button', __( '+ Add part', '3d-product-configurator-block' ) );
+		const add = el( 'button', 'button', __( '+ Add part', 'steil-3d-configurator' ) );
 		add.type = 'button';
 		add.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
 			state.parts.push( {
 				key: 'part' + ( state.parts.length + 1 ),
-				label: __( 'New part', '3d-product-configurator-block' ),
+				label: __( 'New part', 'steil-3d-configurator' ),
 				match: [],
 				palette: [ { name: 'Default', hex: '#999999' } ],
 				default: 'Default',
@@ -303,16 +303,16 @@ function init() {
 		const card = el( 'div', 'steil-pe__card' );
 
 		const head = el( 'div', 'steil-pe__row' );
-		head.appendChild( field( __( 'Key', '3d-product-configurator-block' ), part.key, ( v ) => { part.key = v; sync(); } ) );
-		head.appendChild( field( __( 'Label', '3d-product-configurator-block' ), part.label, ( v ) => { part.label = v; sync(); } ) );
+		head.appendChild( field( __( 'Key', 'steil-3d-configurator' ), part.key, ( v ) => { part.key = v; sync(); } ) );
+		head.appendChild( field( __( 'Label', 'steil-3d-configurator' ), part.label, ( v ) => { part.label = v; sync(); } ) );
 		head.appendChild(
 			field(
-				__( 'Match (comma separated)', '3d-product-configurator-block' ),
+				__( 'Match (comma separated)', 'steil-3d-configurator' ),
 				( part.match || [] ).join( ', ' ),
 				( v ) => { part.match = v.split( ',' ).map( ( s ) => s.trim() ).filter( Boolean ); sync(); }
 			)
 		);
-		const del = el( 'button', 'button-link-delete', __( 'Remove', '3d-product-configurator-block' ) );
+		const del = el( 'button', 'button-link-delete', __( 'Remove', 'steil-3d-configurator' ) );
 		del.type = 'button';
 		del.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
@@ -333,7 +333,7 @@ function init() {
 			const name = el( 'input', 'steil-pe__swatch-name' );
 			name.type = 'text';
 			name.value = swatch.name;
-			name.placeholder = __( 'Name', '3d-product-configurator-block' );
+			name.placeholder = __( 'Name', 'steil-3d-configurator' );
 			name.addEventListener( 'input', () => { swatch.name = name.value; sync(); } );
 			const rm = el( 'button', 'button-link-delete', '×' );
 			rm.type = 'button';
@@ -345,7 +345,7 @@ function init() {
 			item.append( color, name, rm );
 			pal.appendChild( item );
 		} );
-		const addColor = el( 'button', 'button', __( '+ Colour', '3d-product-configurator-block' ) );
+		const addColor = el( 'button', 'button', __( '+ Colour', 'steil-3d-configurator' ) );
 		addColor.type = 'button';
 		addColor.addEventListener( 'click', ( e ) => {
 			e.preventDefault();
@@ -358,7 +358,7 @@ function init() {
 
 		// Default selector.
 		const def = el( 'label', 'steil-pe__default' );
-		def.appendChild( el( 'span', null, __( 'Default colour:', '3d-product-configurator-block' ) ) );
+		def.appendChild( el( 'span', null, __( 'Default colour:', 'steil-3d-configurator' ) ) );
 		const sel = el( 'select' );
 		( part.palette || [] ).forEach( ( s ) => {
 			const opt = el( 'option', null, s.name );
@@ -378,19 +378,19 @@ function init() {
 	// --- finishes ---
 	function renderFinishes() {
 		const box = el( 'div', 'steil-pe__section' );
-		box.appendChild( el( 'h3', null, __( 'Finishes', '3d-product-configurator-block' ) ) );
+		box.appendChild( el( 'h3', null, __( 'Finishes', 'steil-3d-configurator' ) ) );
 		Object.keys( state.finishes ).forEach( ( key ) => {
 			const f = state.finishes[ key ];
 			const row = el( 'div', 'steil-pe__row' );
 			row.appendChild( el( 'code', 'steil-pe__tag', key ) );
-			row.appendChild( field( __( 'Label', '3d-product-configurator-block' ), f.label, ( v ) => { f.label = v; sync(); } ) );
-			row.appendChild( numField( __( 'Roughness', '3d-product-configurator-block' ), f.roughness, ( v ) => { f.roughness = v; sync(); } ) );
-			row.appendChild( numField( __( 'Metalness', '3d-product-configurator-block' ), f.metalness, ( v ) => { f.metalness = v; sync(); } ) );
+			row.appendChild( field( __( 'Label', 'steil-3d-configurator' ), f.label, ( v ) => { f.label = v; sync(); } ) );
+			row.appendChild( numField( __( 'Roughness', 'steil-3d-configurator' ), f.roughness, ( v ) => { f.roughness = v; sync(); } ) );
+			row.appendChild( numField( __( 'Metalness', 'steil-3d-configurator' ), f.metalness, ( v ) => { f.metalness = v; sync(); } ) );
 			box.appendChild( row );
 		} );
 
 		const def = el( 'label', 'steil-pe__default' );
-		def.appendChild( el( 'span', null, __( 'Default finish:', '3d-product-configurator-block' ) ) );
+		def.appendChild( el( 'span', null, __( 'Default finish:', 'steil-3d-configurator' ) ) );
 		const sel = el( 'select' );
 		state.finish_order.forEach( ( key ) => {
 			const opt = el( 'option', null, key );
@@ -409,14 +409,14 @@ function init() {
 	// --- background ---
 	function renderBackground() {
 		const box = el( 'div', 'steil-pe__section' );
-		box.appendChild( el( 'h3', null, __( 'Background', '3d-product-configurator-block' ) ) );
+		box.appendChild( el( 'h3', null, __( 'Background', 'steil-3d-configurator' ) ) );
 		const row = el( 'div', 'steil-pe__row' );
 
 		const transparent = el( 'label' );
 		const cb = el( 'input' );
 		cb.type = 'checkbox';
 		cb.checked = state.background === 'transparent';
-		transparent.append( cb, document.createTextNode( ' ' + __( 'Transparent', '3d-product-configurator-block' ) ) );
+		transparent.append( cb, document.createTextNode( ' ' + __( 'Transparent', 'steil-3d-configurator' ) ) );
 
 		const color = el( 'input' );
 		color.type = 'color';

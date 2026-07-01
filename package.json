@@ -1,5 +1,5 @@
 {
-	"name": "3d-product-configurator-block",
+	"name": "steil-3d-configurator",
 	"version": "1.0.0",
 	"description": "3D product configurator block for WordPress — upload a GLB or FBX model, map parts to colour palettes, let visitors configure and request a quote.",
 	"author": "Steil Digital",
@@ -19,7 +19,7 @@
 		"lint:js": "wp-scripts lint-js",
 		"lint:css": "wp-scripts lint-style",
 		"make:sample": "node scripts/make-sample-glb.mjs",
-		"make:pot": "wp i18n make-pot . languages/3d-product-configurator-block.pot --domain=3d-product-configurator-block --exclude=node_modules,build",
+		"make:pot": "wp i18n make-pot . languages/steil-3d-configurator.pot --domain=steil-3d-configurator --exclude=node_modules,build",
 		"plugin-zip": "wp-scripts plugin-zip"
 	},
 	"files": [
@@ -29,7 +29,7 @@
 		"languages",
 		"src",
 		"webpack.config.js",
-		"3d-product-configurator-block.php",
+		"steil-3d-configurator.php",
 		"uninstall.php",
 		"readme.txt",
 		"README.md",

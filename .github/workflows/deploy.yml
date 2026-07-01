@@ -34,7 +34,7 @@ jobs:
         env:
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SLUG: 3d-product-configurator-block
+          SLUG: steil-3d-configurator
           ASSETS_DIR: .wordpress-org
 
       - name: Attach the built zip to the GitHub release
@@ -43,4 +43,4 @@ jobs:
       - name: Upload release asset
         uses: softprops/action-gh-release@v2
         with:
-          files: 3d-product-configurator-block.zip
+          files: steil-3d-configurator.zip

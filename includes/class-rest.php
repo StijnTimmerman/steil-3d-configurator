@@ -102,9 +102,18 @@ class REST {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function get_product( $request ) {
-		$config = Product_Store::get_config( (int) $request['id'] );
+		$id = (int) $request['id'];
+
+		// The endpoint is intentionally public (the front-end block needs it),
+		// but must expose ONLY published configurator products. This prevents
+		// unauthenticated access to draft/private products or other post types.
+		if ( Product_CPT::POST_TYPE !== get_post_type( $id ) || 'publish' !== get_post_status( $id ) ) {
+			return new \WP_Error( 'steil_cfg_not_found', __( 'Product not found.', 'steil-3d-configurator' ), array( 'status' => 404 ) );
+		}
+
+		$config = Product_Store::get_config( $id );
 		if ( ! $config ) {
-			return new \WP_Error( 'steil_cfg_not_found', __( 'Product not found.', '3d-product-configurator-block' ), array( 'status' => 404 ) );
+			return new \WP_Error( 'steil_cfg_not_found', __( 'Product not found.', 'steil-3d-configurator' ), array( 'status' => 404 ) );
 		}
 		return rest_ensure_response( $config );
 	}
